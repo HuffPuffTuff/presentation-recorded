@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>WebGL / Tree.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/night.css" />
+    <link rel="stylesheet" href="dist/styles.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section><h1>WebGL / Tree.js</h1></section>
+          <section>
+            <h3 class="fragment highlight-red">Web Graphics Library</h3>
+            <p class="fragment fade-up">
+              Is a JavaScript API for rendering interactive 2D and 3D graphics
+              within a web browser without the need for a plugin
+            </p>
+          </section>
+          <section>
+            <h3 class="fragment highlight-red">Three.js</h3>
+            <p class="fragment fade-up">
+              Is a popular open-source JavaScript library built on top of WebGL,
+              it simplifies the creation and control of 3D graphics in the
+              browser
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Tree.js Use Cases</h3>
+          </section>
+          <section data-auto-animate>
+            <h4>3D Visualizations and simulations</h4>
+          </section>
+          <section data-auto-animate>
+            <h4 style="color: red">3D Visualizations and simulations</h4>
+            <iframe
+              data-autoplay
+              width="700"
+              height="540"
+              src="https://threejs-starter-demo.netlify.app/"
+              frameborder="0"
+            ></iframe>
+          </section>
+          <section>
+            <h4>Games and interactive graphics</h4>
+          </section>
+          <section data-auto-animate>
+            <h4 style="color: red">Games and interactive graphics</h4>
+            <iframe
+              data-autoplay
+              width="1000"
+              height="540"
+              src="https://threejs-car-game.netlify.app/"
+              frameborder="0"
+            ></iframe>
+          </section>
+        </section>
+
+        <section>
+          <h3 class="fragment highlight-red">Advantages of using Three.js:</h3>
+          <ul>
+            <li class="fragment fade-up">
+              Ease of use: Simple API for creating and animating 3D objects
+            </li>
+            <li class="fragment fade-up">
+              Speed and Performance: Optimized for WebGL, provides smooth and
+              fast graphics
+            </li>
+            <li class="fragment fade-up">
+              Support: Large community of contributors and extensive
+              documentation available
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h3>How to get started with Three.js</h3>
+          </section>
+          <section data-auto-animate>
+            <ul>
+              <li>
+                Install the three npm module or Download library -
+                <a href="https://threejs.org/">Three.js</a>
+              </li>
+              <pre
+                data-id="code-animation"
+              ><code class="hljs javascript" data-trim><script type="text/template">
+								npm install three
+							</script></code></pre>
+            </ul>
+          </section>
+
+          <section data-auto-animate>
+            <ul>
+              <li>
+                Install the three npm module or Download library -
+                <a href="https://threejs.org/">Three.js</a>
+              </li>
+              <li>Create HTML, JS files and import the Three.js library</li>
+              <pre
+                data-id="code-animation"
+              ><code class="hljs javascript" data-line-numbers="1,3" data-trim><script type="text/template">
+								import * as THREE from 'three';
+
+								// create your first animation
+							</script></code></pre>
+							<li class="fragment fade-up">Create your first animation</li>
+            </ul>
+          </section>
+
+          
+        </section>
+				<section>
+					<section><h2>Create your first animation</h2></section>
+					<section>
+						<h3 style="color: red;">Create your first animation</h3>
+							<pre style="font-size: 18px;"><code data-trim data-line-numbers="|3-4,6-9|11-18|20-24|26-27,29-41|43-57"><script type="text/template">
+	import * as THREE from 'three';
+	
+	// Create a scene
+	const scene = new THREE.Scene();
+	
+	// Create a renderer
+	const renderer = new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+								
+	// Create a camera
+	const camera = new THREE.PerspectiveCamera( 
+	75, 
+	window.innerWidth / window.innerHeight, 
+	0.1, 
+	1000 
+	);
+	camera.position.z = 100;
+	
+	// Create a sun
+	const sunGeometry = new THREE.SphereGeometry( 10, 32, 32 );
+	const sunMaterial = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+	const sun = new THREE.Mesh( sunGeometry, sunMaterial );
+	scene.add( sun );
+								
+	// Create an array to store planets
+	const planets = [];
+								
+	// Create 10 different planets
+	for (let i = 0; i < 10; i++) {
+	const planetGeometry = 
+			new THREE.SphereGeometry( Math.random() * 2 + 0.5, 32, 32 );
+	const planetMaterial = 
+			new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } );
+	const planet = new THREE.Mesh( planetGeometry, planetMaterial );
+	planet.position.x = Math.random() * 20 - 10;
+	planet.position.y = Math.random() * 20 - 10;
+	planet.position.z = Math.random() * 20 - 10;
+	planets.push(planet);
+									scene.add(planet);
+	}
+								
+	// Animation loop
+	const animate = function () {
+	requestAnimationFrame( animate );
+	
+	// Update the position of each planet
+	for (let i = 0; i < 10; i++) {
+		const planet = planets[i];
+		planet.position.x = 30 * Math.cos( Date.now() * 0.001 * (i + 1) );
+		planet.position.z = 30 * Math.sin( Date.now() * 0.001 * (i + 1) );
+	}
+	
+	renderer.render( scene, camera );
+	};
+	
+	animate();
+								</script></code></pre>
+						</ul>
+					</section>
+
+					<section>
+						<h3 style="color: red;">Result</h3>
+						<iframe
+              data-autoplay
+              width="700"
+              height="540"
+              src="https://first-three.netlify.app/"
+              frameborder="0"
+            ></iframe>
+					</section>
+				</section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
